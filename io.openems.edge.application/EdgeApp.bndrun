@@ -4,10 +4,10 @@
 
 -resolve.effective: active
 
--runproperties:\
+-runproperties: \
+	felix.cm.dir=/home/andy/Work/VoltHeaven/openems/config,\
+	openems.data.dir=/home/andy/Work/VoltHeaven/openems/data,\
 	org.osgi.service.http.port=8080,\
-	felix.cm.dir=c:/openems/config,\
-	openems.data.dir=c:/openems/data,\
 	org.apache.felix.eventadmin.Timeout=0,\
 	org.ops4j.pax.logging.DefaultServiceLog.level=INFO
 
@@ -203,7 +203,7 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.swisspower',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
 	bnd.identity;id='io.openems.edge.weather.openmeteo',\
-	
+	bnd.identity;id='io.openems.edge.meter.growatt'
 -runbundles: \
 	Java-WebSocket;version='[1.6.0,1.6.1)',\
 	bcpkix;version='[1.81.0,1.81.1)',\
@@ -218,6 +218,7 @@
 	com.squareup.okhttp3.logging;version='[5.1.0,5.1.1)',\
 	com.squareup.okio;version='[3.16.0,3.16.1)',\
 	com.sun.jna;version='[5.17.0,5.17.1)',\
+	io.openems.edge.meter.growatt;version='[1.0.0,1.0.1)',\
 	io.openems.common;version=snapshot,\
 	io.openems.edge.application;version=snapshot,\
 	io.openems.edge.battery.api;version=snapshot,\
@@ -459,3 +460,4 @@
 	reactive-streams;version='[1.0.4,1.0.5)',\
 	rrd4j;version='[3.9.0,3.9.1)',\
 	stax2-api;version='[4.2.2,4.2.3)'
+-resolve: manual
