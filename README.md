@@ -43,3 +43,7 @@ python utils/solarman_tcp_proxy.py -l DONGLE_IP -s DONGLE_SERIAL
         - Port: 1502 (same port ??)
     - Settings > Install components > 'PV-Inverter Deye'
         - Modbus-ID: modbus0 (same as above)
+
+## Modbus registers
+
+[`andy/`](/andy)
