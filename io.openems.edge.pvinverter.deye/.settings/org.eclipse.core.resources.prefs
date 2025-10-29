@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/io/openems/edge/pvinverter/deye/Config.java=UTF-8
+encoding//src/io/openems/edge/pvinverter/deye/PvInverterDeye.java=UTF-8
+encoding//src/io/openems/edge/pvinverter/deye/PvInverterDeyeImpl.java=UTF-8
+encoding//test/io/openems/edge/pvinverter/deye/MyConfig.java=UTF-8
+encoding//test/io/openems/edge/pvinverter/deye/MyModbusDeviceTest.java=UTF-8
+encoding/<project>=UTF-8
+encoding/bnd.bnd=UTF-8
+encoding/readme.adoc=UTF-8

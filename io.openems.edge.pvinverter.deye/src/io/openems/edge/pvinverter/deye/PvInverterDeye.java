@@ -1,9 +1,9 @@
-package io.openems.edge.meter.growatt;
+package io.openems.edge.pvinverter.deye;
 
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.component.OpenemsComponent;
 
-public interface GrowattModbusMeter extends OpenemsComponent {
+public interface PvInverterDeye extends OpenemsComponent {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 		;
