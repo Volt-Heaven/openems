@@ -25,7 +25,7 @@ UI:
 
 ## Connect DEYE
 
-1. Clone [pysolarmanv5 - tcp_proxy branch](https://github.com/Volt-Heaven/pysolarmanv5/tree/tcp_proxy)
+1. Clone [pysolarmanv5](https://github.com/jmccrohan/pysolarmanv5) (my changes were accepted)
 2. Create & activate .venv
 3. Install requirements with pip
 4. Run:

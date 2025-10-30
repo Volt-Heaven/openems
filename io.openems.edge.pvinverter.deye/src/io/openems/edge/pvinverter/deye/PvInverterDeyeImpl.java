@@ -98,8 +98,8 @@ public class PvInverterDeyeImpl extends AbstractOpenemsModbusComponent
 	@Override
 	protected ModbusProtocol defineModbusProtocol() {
 		return new ModbusProtocol(this, //
-			new FC3ReadRegistersTask(607, Priority.HIGH,
-					m(ElectricityMeter.ChannelId.ACTIVE_POWER, new SignedWordElement(607), DIRECT_1_TO_1)
+			new FC3ReadRegistersTask(667, Priority.HIGH,
+					m(ElectricityMeter.ChannelId.ACTIVE_POWER, new SignedWordElement(667), DIRECT_1_TO_1)
 			)
 		);
 	}
