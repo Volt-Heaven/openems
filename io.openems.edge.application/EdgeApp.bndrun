@@ -204,7 +204,8 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
 	bnd.identity;id='io.openems.edge.weather.openmeteo',\
 	bnd.identity;id='io.openems.edge.meter.growatt',\
-	bnd.identity;id='io.openems.edge.pvinverter.deye'
+	bnd.identity;id='io.openems.edge.pvinverter.deye',\
+	bnd.identity;id='io.openems.edge.meter.deye.grid'
 -runbundles: \
 	Java-WebSocket;version='[1.6.0,1.6.1)',\
 	bcpkix;version='[1.81.0,1.81.1)',\
@@ -462,5 +463,6 @@
 	com.google.gson;version='[2.13.2,2.13.3)',\
 	io.openems.edge.meter.growatt;version=snapshot,\
 	io.openems.edge.pvinverter.deye;version=snapshot,\
-	io.openems.wrapper.okhttp;version=snapshot
+	io.openems.wrapper.okhttp;version=snapshot,\
+	io.openems.edge.meter.deye.grid;version=snapshot
 -resolve: manual
