@@ -1,15 +1,33 @@
+*Open the **Outline** (table of contents) from the top right.*
+
 # Client - miniPC
 
+On the mini PC you must choose how to run **OpenEMS Edge:**
+- run **container** (official release)
+- run from **source code** (development, implement new devices)  
+
+Along OpenEMS Edge, you need at least **3 more services**:
+- **OpenEMS UI** for a local dashboard
+- **influxdb** for storing history and displaying the chart
+- **solarman proxy** for DEYE dongle
+
 ## Setup Operating System
-- Enable BIOS settings: auto power-on, boot without keyboard
-- Install OS (choose):
-    - install Ubuntu Server (headless) for running official OpenEMS release  
+- Enable BIOS settings: 
+    - auto power-on 
+    - boot from USB
+    - boot without keyboard
+- Choose OS:
+    - install **Ubuntu Server** (headless) for running official OpenEMS release  
     (Docker containers)
-    - install Ubuntu Desktop for running latest OpenEMS  
+    - install **Ubuntu Desktop** for running latest OpenEMS  
     (run from source code - Eclipse IDE)
-- setup auto-login, never sleep, never power-off, auto updates, maybe auto reboot regularly
+- Desktop settings: 
+    - auto-login
+    - never sleep
+    - auto updates?
+    - maybe auto reboot regularly?
 - setup remote control: ssh or RustDesk (permanent password)
-- setup static IP address
+- setup static IP address if possible
 
 ## Run from source code
 
@@ -27,10 +45,8 @@ http://localhost:8080/system/console/configMgr (admin admin)
 5. Enable Controller API Websocket (default settings) for UI
 
 ### Setup OpenEMS UI
-1. Follow [official guide](https://openems.github.io/openems.io/openems/latest/ui/setup-ide.html) with this branch (andy)
-2. Open terminal in project folder
-3. `cd ui`
-4. `ng serve -c openems-edge-dev`
+Follow [official guide](https://openems.github.io/openems.io/openems/latest/ui/setup-ide.html) with this branch (andy).  
+I had to replace the German language file with the English one. 
 
 ### Just run
 
@@ -43,36 +59,36 @@ UI:
 - Run `cd ui`
 - Run `ng serve -c openems-edge-dev`
 
-## Connect DEYE
+### Connect DEYE
 
 1. Clone [pysolarmanv5](https://github.com/jmccrohan/pysolarmanv5) (my changes were accepted)
 2. Install python3, python-is-python3, python3.13-venv, pip
-3. Create .venv
-  - `python -m venv .venv`
-4. Activate .venv (every time before running)
-  - `source .venv/bin/activate`
-5. Install requirements with pip
-  - `pip install -r requirements.txt`
-6. Install library
-  - `pip install pysolarmanv5`
+3. Create virtual environment  
+`python -m venv .venv`
+4. Activate .venv (every time before running)  
+`source .venv/bin/activate`
+5. Install requirements with pip  
+`pip install -r requirements.txt`
+6. Install library  
+`pip install pysolarmanv5`
 7. Run:
 ```
 python utils/solarman_tcp_proxy.py -l DONGLE_IP -s DONGLE_SERIAL
 ```
 (default port 1502: `-p 1502`)
 
-5. Test with qModMaster / HA modbus integration
-6. In openEMS: 
+5. You can test with qModMaster / HA modbus integration
+6. In OpenEMS UI: 
     - login as admin
     - Settings > Install components > 'Bridge Modbus/TCP'
         - Component-ID: modbus0
-        - IP: 0.0.0.0 (where proxy is running)
-        - Port: 1502 (same port ??)
+        - IP: 0.0.0.0 (where proxy is running - localhost)
+        - Port: 1502 (same port)
     - Settings > Install components > 'PV-Inverter Deye'
         - Modbus-ID: modbus0 (same as above)
-    - also Deye Grid Power and Deye Batteries
+        - same for Deye Grid Power and Deye Batteries
 
-## Enable history
+### Enable history
 
 1. [Install Docker ](https://docs.docker.com/engine/install/ubuntu)
 2. [Docker next steps](https://docs.docker.com/engine/install/linux-postinstall/): non-root, start on boot
@@ -100,7 +116,7 @@ curl -i -XPOST "http://127.0.0.1:8086/query" \
 curl -i -XPOST "http://127.0.0.1:8086/query" \
   --data-urlencode "q=CREATE RETENTION POLICY \"data\" ON \"db\" DURATION 0s REPLICATION 1 DEFAULT"
 ```
-7. Enable in openEMS
+7. Enable in openEMS Edge
   - URL: http://localhost:8086
   - Org: -
   - ApiKey: :
@@ -108,16 +124,20 @@ curl -i -XPOST "http://127.0.0.1:8086/query" \
 
 ## Run from containers
 
+Follow [official guide](https://openems.github.io/openems.io/openems/latest/edge/deploy/docker.html).
+
 # Server - Cloud
 
 ## Backend
 
-Run this compose:
+[Official guide](https://openems.github.io/openems.io/openems/latest/backend/deploy/docker.html)
+
+Complete compose file:
 ```
 https://raw.githubusercontent.com/OpenEMS/openems/refs/heads/main/tools/docker/backend/docker-compose.yml
 ```
-- Maybe change influxdb to 1.12.2 as above.
-- Edit ports if already in use:
+Edit these ports if they are already in use?  
+Then use :89 in UI url.
 ```
 ports:
     - 80:80     # to 89:80
@@ -131,24 +151,24 @@ admin admin
 2. Change Metadata.File path:  
 `/var/opt/openems/data/metadata.json`  
 3. Create metadata.json
-- open terminal
-- `cd /var/lib/docker/volumes/vopenems_openems-backend-data/_data`
-- `nano metadata.json`
-- Choose apikey and password
-```
-{
-	edges: {
-		edge0: {
-			apikey: "d92IC4eEHyrqmiMab6GX",
-			setuppassword: "3rzEK9pAqV8iApe7twvy",
-			comment: "OpenEMS Demo Edge"
-		}
-}
-```
+    - open terminal
+    - `cd /var/lib/docker/volumes/vopenems_openems-backend-data/_data`
+    - `nano metadata.json`
+    - Choose apikey and password
+    ```
+    {
+        edges: {
+            edge0: {
+                apikey: "d92IC4eEHyrqmiMab6GX",
+                setuppassword: "3rzEK9pAqV8iApe7twvy",
+                comment: "OpenEMS Demo Edge"
+            }
+    }
+    ```
 4. Enable history here too (same as Edge).
 5. Go to Edge page and connect to Backend
-- Controller Api Backend
-- apikey + ws://ip:8081
+    - Install: Controller Api Backend
+    - apikey + ws://ip:8081
 
 # Modbus registers
 
